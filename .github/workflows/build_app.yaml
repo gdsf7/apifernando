@@ -1,4 +1,3 @@
-#script para automacao no github
 name: AutoService SB construcao e teste
 
 on:
@@ -19,17 +18,18 @@ jobs:
       - name: executar maven
         run: mvn clean install -DskipTests
       - name: gerando docker
-        run: docker build -t proffernando/autoservicesb .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{secrets.REPO_NAME}} .
       - name: login dockerHub
-        run: docker login -u ${{secrets.DOCKER_USER}} -p '${{secrets.DOCKER_PASS}}'
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASS }}'
       - name: publicar a imagem
-        run: docker push proffernando/autoservicesb
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/${{secrets.REPO_NAME}}
+
   instalacao_aws:
     runs-on: self-hosted
     needs: construir
     steps:
       - name: pegar imagem
-        run: sudo docker pull proffernando/autoservicesb
+        run: sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{secrets.REPO_NAME}}
       - name: baixar o dockercompose
         uses: actions/checkout@v4
       - name: gerar arquivo de env
@@ -41,7 +41,7 @@ jobs:
           POSTGRES_USER=${{secrets.PG_USER}}
           POSTGRES_PASSWORD=${{secrets.PG_PASS}}
           POSTGRES_DB=${{secrets.PG_BD}}
+          DOCKER_IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/${{secrets.REPO_NAME}}
           EOF
       - name: executar container
-#        run: sudo docker run -t proffernando/autoservicesb
         run: sudo docker compose up -d --remove-orphans
