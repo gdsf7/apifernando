@@ -1,6 +1,6 @@
 services:
   autoservicesb_api:
-    image: proffernando/autoservicesb
+    image: ${DOCKER_IMAGE_NAME}
     ports:
       - "80:8080"
     environment:
