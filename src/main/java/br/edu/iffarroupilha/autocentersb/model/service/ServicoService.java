@@ -22,7 +22,7 @@ public class ServicoService {
         return this.servicoRepository.findAll();
     }
 
-    public void delete(Long idServico){
+    public void delete(Integer idServico){
         this.servicoRepository.deleteById(idServico);
     }
 
