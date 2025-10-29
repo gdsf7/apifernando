@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ServicoRepository extends JpaRepository<Servico, Integer> {
+public interface ServicoRepository extends JpaRepository<Servico, Long> {
     List<Servico> findByDescricao(String descricao);
 }
