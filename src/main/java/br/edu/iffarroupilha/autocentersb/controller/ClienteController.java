@@ -33,7 +33,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{idCliente}")
-    public void cadastrarNovoCliente(@RequestParam Long idCliente) {
+    public void deletarNovoCliente(@RequestParam Long idCliente) {
         servico.delete(idCliente);
     }
 
