@@ -8,33 +8,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cliente")
-public class ClienteController {
+public class ClienteController extends Controller<Cliente, ClienteService> {
 
     private ClienteService servico;
 
     public ClienteController(ClienteService servico) {
-        this.servico = servico;
-    }
-
-    @CrossOrigin("http://localhost:4200")
-    @GetMapping()
-    public List<Cliente> listarCliente() {
-        return servico.buscarTodos();
-    }
-    @CrossOrigin("http://localhost:4200")
-    @PostMapping
-    public void cadastrarNovoCliente(@RequestBody Cliente cliente) {
-        servico.salvar(cliente);
-    }
-
-    @PutMapping
-    public void atualizarCliente(@RequestBody Cliente cliente) {
-        servico.salvar(cliente);
-    }
-
-    @DeleteMapping("/{idCliente}")
-    public void deletarNovoCliente(@RequestParam Long idCliente) {
-        servico.delete(idCliente);
+        super(servico);
     }
 
     @GetMapping("/teste")

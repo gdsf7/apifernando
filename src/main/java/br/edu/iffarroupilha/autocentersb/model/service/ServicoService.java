@@ -6,27 +6,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class ServicoService {
-
-    private ServicoRepository servicoRepository;
-
+public class ServicoService extends Model<Servico, ServicoRepository> {
     public ServicoService(ServicoRepository servicoRepository) {
-        this.servicoRepository = servicoRepository;
-    }
-
-    public Servico salvar(Servico novoServico){
-        return servicoRepository.save(novoServico);
-    }
-
-    public List<Servico> buscarTodos(){
-        return this.servicoRepository.findAll();
-    }
-
-    public void delete(Long idServico){
-        this.servicoRepository.deleteById(idServico);
+        super(servicoRepository);
     }
 
     public List<Servico> buscaPorDescricao(String termo) {
-        return this.servicoRepository.findByDescricao(termo);
+        return this.repository.findByDescricao(termo);
     }
 }
